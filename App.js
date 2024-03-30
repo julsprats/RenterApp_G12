@@ -1,12 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+// screens
+import SearchScreen from './screens/SearchScreen';
+import MyReservationsScreen from './screens/MyReservationsScreen';
+
+// icons
+import { MaterialIcons } from '@expo/vector-icons';
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            if (route.name === 'Search') {
+              return <MaterialIcons name="map" size={24} color={color} />;
+            }
+            if (route.name === 'My Reservations') {
+              return <MaterialIcons name="person-search" size={24} color={color} />;
+            }
+          },
+          tabBarActiveTintColor: 'crimson',
+          tabBarInactiveTintColor: 'gray',
+        })}
+      >
+        <Tab.Screen name="Search Screen" component={SearchScreen} />
+        <Tab.Screen name="My Reservations" component={MyReservationsScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
 
